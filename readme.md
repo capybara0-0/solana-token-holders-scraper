@@ -6,7 +6,7 @@ This NodeJS script automates the process of scraping and filtering Solana token 
 
 - **Scraping Solana Token Holders**: Automatically retrieves token holder data from the Solana blockchain.
 - **Filtering**: Filters out holders if they are present in whitelist address.
-- **Output**: Formats and exports the data into a CSV or Excel file for easy access and manipulation.
+- **Output**: Formats and exports the data into a Excel file for easy access and manipulation.
 
 ## Output Format
 
