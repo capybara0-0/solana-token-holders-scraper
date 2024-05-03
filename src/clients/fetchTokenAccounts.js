@@ -1,7 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { MINT_ADDRESS } from "../constants/constatnt.js";
-import { connection } from "./connection.js";
+import { connection } from "../constants/connection.js";
 
 /**
  * Retrieves the public key addresses of all token accounts owned by a specified address and associated with a predefined mint.

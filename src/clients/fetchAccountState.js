@@ -1,7 +1,7 @@
 import { AccountLayout, AccountState } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 import chalk from "chalk";
-import { connection } from "./connection.js";
+import { connection } from "../constants/connection.js";
 
 const WARNING_MESSAGE = "[Warning] Token account not found or doesn't exist.";
 const ERROR_MESSAGE_PREFIX = "[Error: fetchAccountState]";
