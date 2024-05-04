@@ -25,7 +25,7 @@ export async function fetchAccountState(tokenAccountPubKey) {
 
     const accountData = AccountLayout.decode(tokenAccountInfo.data);
     const isFrozen = accountData.state === AccountState.Frozen;
-    console.log(`Account ${tokenAccountPubKey} isFrozen? state: ${isFrozen}`);
+    console.log(`Account ${tokenAccountPubKey} isFrozen? ${isFrozen}`);
     return isFrozen;
   } catch (error) {
     console.error(

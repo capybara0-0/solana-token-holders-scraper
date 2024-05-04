@@ -1,31 +1,43 @@
 import fs from "fs";
-import readLine from "readline";
+import readline from "readline";
 
-export async function readAddressesFromFile(filePath) {
-  return new Promise((resolve, reject) => {
-    if (!fs.existsSync(filePath)) {
-      reject(new Error(`The file ${filePath} does not exist`));
-      return;
-    }
+export async function streamAddresses(filePath, action) {
+  if (!fs.existsSync(filePath)) {
+    console.log(`The file ${filePath} does not exist.`);
+    return null;
 
-    const addresses = [];
-    const fileStream = fs.createReadStream(filePath);
+    // throw new Error(`The file ${filePath} does not exist`);
+  }
 
-    const rl = readLine.createInterface({
-      input: fileStream,
-      crlfDelay: Infinity,
-    });
-
-    rl.on("line", (line) => {
-      addresses.push(line.trim());
-    });
-
-    rl.on("close", () => {
-      resolve(addresses);
-    });
-
-    rl.on("error", (err) => {
-      reject(err);
-    });
+  const fileStream = fs.createReadStream(filePath);
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity,
   });
+
+  try {
+    for await (const line of rl) {
+      await action(line.trim());
+    }
+  } catch (err) {
+    console.error("Error processing file:", err);
+  } finally {
+    rl.close();
+    fileStream.destroy();
+  }
+}
+
+export async function compareAddressFiles(file1, file2) {
+  const addresses = new Set();
+
+  // Load all addresses from file1 into a Set
+  await streamAddresses(file1, (address) => addresses.add(address));
+
+  await streamAddresses(file2, (address) => {
+    if (addresses.has(address)) {
+      addresses.delete(address);
+    }
+  });
+
+  return Array.from(addresses);
 }
