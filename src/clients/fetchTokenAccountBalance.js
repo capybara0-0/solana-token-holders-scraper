@@ -24,14 +24,10 @@ export async function fetchTokenAccountBalance(ownerAddress) {
       new PublicKey(specificTokenAccount.pubkey),
     );
 
-    console.log(
-      "Balance of the specific token account:",
-      tokenAccountBalance.value.uiAmount,
-    );
     return tokenAccountBalance.value.uiAmount;
   } catch (error) {
     console.error("Failed to fetch token account balance:", error);
   }
 }
 
-await fetchTokenAccountBalance("4pgnTmbAYCP5yWDbkDg4bFRKs6URYgJDDJwXCjtjh4J1");
+// await fetchTokenAccountBalance("4pgnTmbAYCP5yWDbkDg4bFRKs6URYgJDDJwXCjtjh4J1");

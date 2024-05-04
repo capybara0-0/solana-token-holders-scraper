@@ -1,14 +1,39 @@
-import { compareAddressFiles } from "./utils/readAddress.js";
+// Clients module
+import { fetchAccountState } from "./clients/fetchAccountState.js";
+import { fetchTokenAccountBalance } from "./clients/fetchTokenAccountBalance.js";
+import { findTokenAccounts } from "./clients/fetchTokenAccounts.js";
 
-const file1 = "ListAddress.txt";
-const file2 = "WhiteListAddress.txt";
+// Constants module
+import { FILE1, FILE2 } from "./constants/constatnt.js";
 
-await compareAddressFiles(file1, file2)
-  .then((uniqueAddresses) => {
-    if (uniqueAddresses.length === 0) {
-      console.log(`0 non white listed addresses found.`);
-    } else {
-      console.log("non-white Listed addresses: ", uniqueAddresses);
-    }
-  })
-  .catch((error) => console.error("Error: ", error));
+// Utils module
+import { compareAddressFiles } from "./utils/compareAddressFiles.js";
+
+export async function main(file1, file2) {
+  try {
+    const addresses = await compareAddressFiles(file1, file2);
+    const resultsPromises = addresses.map(async (address) => {
+      const tokenAccounts = await findTokenAccounts(address);
+
+      const accountState = await fetchAccountState(tokenAccounts[0]);
+
+      const tokenAccountBalance = await fetchTokenAccountBalance(address);
+
+      return {
+        address,
+        tokenAccounts,
+        tokenAccountBalance,
+        accountState,
+      };
+    });
+
+    const results = await Promise.all(resultsPromises);
+    console.log(results);
+    return results;
+  } catch (error) {
+    console.error("Failed to process addresses:", error);
+    throw error;
+  }
+}
+
+await main(FILE1, FILE2).catch(console.error);

@@ -25,7 +25,8 @@ export async function fetchAccountState(tokenAccountPubKey) {
 
     const accountData = AccountLayout.decode(tokenAccountInfo.data);
     const isFrozen = accountData.state === AccountState.Frozen;
-    console.log(`Account ${tokenAccountPubKey} isFrozen? ${isFrozen}`);
+
+    // console.log(`Account ${tokenAccountPubKey} isFrozen? ${isFrozen}`);
     return isFrozen;
   } catch (error) {
     console.error(
@@ -37,4 +38,4 @@ export async function fetchAccountState(tokenAccountPubKey) {
   }
 }
 
-await fetchAccountState("GpVQ8cx11XqkRS395tHMTSARnQtrkheY8iUvDmrCrvF3");
+// await fetchAccountState("GpVQ8cx11XqkRS395tHMTSARnQtrkheY8iUvDmrCrvF3");

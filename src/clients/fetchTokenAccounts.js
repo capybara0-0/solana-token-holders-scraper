@@ -32,7 +32,6 @@ export async function findTokenAccounts(ownerAddress) {
         .map((account) => account.pubkey.toString())
         .reduce((acc, address) => {
           acc.push(address);
-          console.log(acc);
           return acc;
         }, []) || []
     );
@@ -44,4 +43,4 @@ export async function findTokenAccounts(ownerAddress) {
   }
 }
 
-await findTokenAccounts("4pgnTmbAYCP5yWDbkDg4bFRKs6URYgJDDJwXCjtjh4J1");
+// await findTokenAccounts("4pgnTmbAYCP5yWDbkDg4bFRKs6URYgJDDJwXCjtjh4J1");
