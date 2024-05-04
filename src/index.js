@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 // Clients module
 import { fetchAccountState } from "./clients/fetchAccountState.js";
 import { fetchTokenAccountBalance } from "./clients/fetchTokenAccountBalance.js";
@@ -8,29 +10,54 @@ import { FILE1, FILE2 } from "./constants/constatnt.js";
 
 // Utils module
 import { compareAddressFiles } from "./utils/compareAddressFiles.js";
+import { delay } from "./utils/delay.js";
+
+// Models module
+import { writeToExcel } from "./models/excelManager.js";
 
 async function processAddresses(addresses) {
+  const results = [];
+
   for (const address of addresses) {
-    console.log(`Processing address: ${address}`);
+    const result = { address };
+
     const tokenAccounts = await findTokenAccounts(address);
-    await delay(3500);
-    const balance = await fetchTokenAccountBalance(address);
-    await delay(3500);
-    const isFrozen = await fetchAccountState(tokenAccounts[0]);
-    await delay(3500);
+    await delay(4000);
 
-    console.log(`Token Account: ${tokenAccounts}`);
-    console.log(`Balance: ${balance}`);
-    console.log(`Is Frozen: ${isFrozen}`);
+    if (tokenAccounts.length > 0) {
+      const balance = await fetchTokenAccountBalance(address);
+      await delay(4000);
 
-    console.log(`=`.repeat(50));
+      const isFrozen = (await fetchAccountState(tokenAccounts[0]))
+        ? "isFrozen"
+        : "notFrozen";
+      await delay(4000);
+
+      result.tokenAccounts = tokenAccounts;
+      result.balance = balance;
+      result.isFrozen = isFrozen;
+
+      results.push(result);
+    } else {
+      console.log(
+        chalk.blue(
+          `[INFO] Owner Address does not have the specified SPL-token. Skipping`,
+        ),
+      );
+
+      result.info =
+        "Owner Address does not have the specified SPL-token. Skipping";
+      await delay(4000);
+    }
+
+    console.log(chalk.magentaBright(`-`.repeat(85)));
   }
+
+  return results;
 }
 
 (async () => {
   const addresses = await compareAddressFiles(FILE1, FILE2);
-  await processAddresses(addresses);
+  const results = await processAddresses(addresses);
+  writeToExcel(results);
 })();
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
