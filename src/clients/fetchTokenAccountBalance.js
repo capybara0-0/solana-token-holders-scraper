@@ -23,7 +23,7 @@ export async function fetchTokenAccountBalance(ownerAddress) {
     const tokenAccountBalance = await connection.getTokenAccountBalance(
       new PublicKey(specificTokenAccount.pubkey),
     );
-
+    // console.log(tokenAccountBalance.value.uiAmount);
     return tokenAccountBalance.value.uiAmount;
   } catch (error) {
     console.error("Failed to fetch token account balance:", error);

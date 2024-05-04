@@ -9,31 +9,28 @@ import { FILE1, FILE2 } from "./constants/constatnt.js";
 // Utils module
 import { compareAddressFiles } from "./utils/compareAddressFiles.js";
 
-export async function main(file1, file2) {
-  try {
-    const addresses = await compareAddressFiles(file1, file2);
-    const resultsPromises = addresses.map(async (address) => {
-      const tokenAccounts = await findTokenAccounts(address);
+async function processAddresses(addresses) {
+  for (const address of addresses) {
+    console.log(`Processing address: ${address}`);
+    const tokenAccounts = await findTokenAccounts(address);
+    await delay(3500);
+    const balance = await fetchTokenAccountBalance(address);
+    await delay(3500);
+    const isFrozen = await fetchAccountState(tokenAccounts[0]);
+    await delay(3500);
 
-      const accountState = await fetchAccountState(tokenAccounts[0]);
+    console.log(`Token Account: ${tokenAccounts}`);
+    console.log(`Balance: ${balance}`);
+    console.log(`Is Frozen: ${isFrozen}`);
 
-      const tokenAccountBalance = await fetchTokenAccountBalance(address);
-
-      return {
-        address,
-        tokenAccounts,
-        tokenAccountBalance,
-        accountState,
-      };
-    });
-
-    const results = await Promise.all(resultsPromises);
-    console.log(results);
-    return results;
-  } catch (error) {
-    console.error("Failed to process addresses:", error);
-    throw error;
+    console.log(`=`.repeat(50));
   }
 }
 
-await main(FILE1, FILE2).catch(console.error);
+(async () => {
+  const addresses = await compareAddressFiles(FILE1, FILE2);
+  await processAddresses(addresses);
+})();
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
