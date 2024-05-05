@@ -36,10 +36,8 @@ export async function findTokenAccounts(ownerAddress) {
         }, []) || []
     );
   } catch (error) {
-    console.error("An error occurred:", error);
-    throw new Error(
-      "An error occurred while finding token accounts: " + error.message,
-    );
+    console.error("[ERROR] status: Fetching token Account:", error);
+    throw new Error("[ERROR] status: Fetching token Account: " + error.message);
   }
 }
 

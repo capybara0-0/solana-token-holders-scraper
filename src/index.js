@@ -50,8 +50,6 @@ async function processAddresses(addresses) {
         "Owner Address does not have the specified SPL-token. Skipping";
       await delay(4000);
     }
-
-    console.log(chalk.magentaBright(`-`.repeat(85)));
   }
 
   return results;
