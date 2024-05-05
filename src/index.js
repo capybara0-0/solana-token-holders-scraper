@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import cliProgress from "cli-progress";
 
 // Clients module
 import { fetchAccountState } from "./clients/fetchAccountState.js";
@@ -19,7 +20,13 @@ import { writeToExcel } from "./models/excelManager.js";
 async function processAddresses(addresses) {
   const results = [];
 
-  for (const address of addresses) {
+  const progressBar = new cliProgress.SingleBar(
+    {},
+    cliProgress.Presets.shades_classic,
+  );
+  progressBar.start(addresses.length, 0);
+
+  for (const [index, address] of addresses.entries()) {
     const result = { address };
 
     const tokenAccounts = await findTokenAccounts(address);
@@ -40,17 +47,13 @@ async function processAddresses(addresses) {
 
       results.push(result);
     } else {
-      console.log(
-        chalk.blue(
-          `[INFO] Owner Address does not have the specified SPL-token. Skipping`,
-        ),
-      );
-
       result.info =
         "Owner Address does not have the specified SPL-token. Skipping";
       await delay(4000);
     }
+    progressBar.update(index + 1);
   }
+  progressBar.stop();
 
   return results;
 }
