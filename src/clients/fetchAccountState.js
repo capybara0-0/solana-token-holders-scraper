@@ -34,6 +34,5 @@ export async function fetchAccountState(tokenAccountPubKey) {
         `${ERROR_MESSAGE_PREFIX} fetching or decoding account information: ${error}`,
       ),
     );
-    throw error;
   }
 }
