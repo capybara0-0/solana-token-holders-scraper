@@ -3,11 +3,11 @@
 // ------------------------
 
 // Solana's Mainnet RPC API.
-export const RPC_URL = "";
+export const RPC_URL = "https://api.devnet.solana.com";
 
 // The mint address of the token you are interested in.
-export const MINT_ADDRESS = "";
+export const MINT_ADDRESS = "7vMKFZiGm4czA6vnkJhPCGuu2oWxXBRQkSyCQWkPY2Bw";
 
-// ENTER YOUR file path here.
-export const FILE_PATH =
-  "<your file pathe here> /solana-account-scrapper/src/WhiteListAddress.txt";
+// ENTER YOUR file name here.
+// ⚠️ Make sure your txt file is inside the src directory.
+export const FILE_NAME = "WhiteListedAddress";

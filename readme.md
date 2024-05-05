@@ -24,7 +24,7 @@ Before you begin, ensure that NodeJS is installed on your system. Download and i
 
 To configure the scraper:
 
-1. Populate the `WhiteListAddress.txt` files located in the `src/` directory. These files should contain the addresses you wish to exclude.
+1. Create a txt file inside the src directory if there is none and populate with the addresses you want to exclude for scrapping data.
 2. Open the `src/constants/constatnt.js` file and set your parameters.
 
 ## Usage
