@@ -37,5 +37,3 @@ export async function fetchAccountState(tokenAccountPubKey) {
     throw error;
   }
 }
-
-// await fetchAccountState("GpVQ8cx11XqkRS395tHMTSARnQtrkheY8iUvDmrCrvF3");

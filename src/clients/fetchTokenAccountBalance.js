@@ -29,5 +29,3 @@ export async function fetchTokenAccountBalance(ownerAddress) {
     console.error("Failed to fetch token account balance:", error);
   }
 }
-
-// await fetchTokenAccountBalance("4pgnTmbAYCP5yWDbkDg4bFRKs6URYgJDDJwXCjtjh4J1");

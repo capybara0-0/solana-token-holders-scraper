@@ -7,6 +7,7 @@ import { findTokenAccounts } from "./clients/fetchTokenAccounts.js";
 
 // Constants module
 import { FILE1, FILE2 } from "./constants/constatnt.js";
+import { DELAY } from "./constants/constatnt.js";
 
 // Utils module
 import { compareAddressFiles } from "./utils/compareAddressFiles.js";
@@ -22,16 +23,16 @@ async function processAddresses(addresses) {
     const result = { address };
 
     const tokenAccounts = await findTokenAccounts(address);
-    await delay(4000);
+    await delay(DELAY * 1000);
 
     if (tokenAccounts.length > 0) {
       const balance = await fetchTokenAccountBalance(address);
-      await delay(4000);
+      await delay(DELAY * 1000);
 
       const isFrozen = (await fetchAccountState(tokenAccounts[0]))
         ? "isFrozen"
         : "notFrozen";
-      await delay(4000);
+      await delay(DELAY * 1000);
 
       result.tokenAccounts = tokenAccounts;
       result.balance = balance;

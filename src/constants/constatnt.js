@@ -11,3 +11,7 @@ export const FILE1 =
   "/mnt/c/playground/work/solana-account-scrapper/src/ListAddress.txt";
 export const FILE2 =
   "/mnt/c/playground/work/solana-account-scrapper/src/WhiteListAddress.txt";
+
+// Delay Time in seconds
+// ⚠️⚠️ If you are using a regular RPC_URL, do not go below less than 4 seconds.
+export const DELAY = 4;
